@@ -1,0 +1,26 @@
+{
+  "name": "binary-packets",
+  "version": "0.1.0",
+  "description": "Testing out communication using binary packets over websockets",
+  "main": "./src/server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielmcq/binary-packets.git"
+  },
+  "author": "Daniel McQuiston <daniel.pro@dehugo.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielmcq/binary-packets/issues"
+  },
+  "homepage": "https://github.com/danielmcq/binary-packets#readme",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-ws": "^2.0.0"
+  }
+}
