@@ -25,8 +25,20 @@ app.use("/", (req, res, next) => {
 
 app.ws("/echo", (ws, req) => {
 	ws.on("message", msg => {
-		console.log("message received", msg)
-		ws.send(msg+" whoa whoa")
+		if (msg instanceof Buffer) {
+			if (msg[0] === 0xff) {
+				let resPacketData = stringToBinaryArray("SOCKET001")
+
+				let binaryPacket = createBinaryArray(resPacketData)
+				console.log("binaryPacket", binaryPacket)
+				ws.send(binaryPacket)
+			} else {
+				ws.send("packet received")
+			}
+		} else {
+			console.log("message received", msg)
+			ws.send(msg)
+		}
 	})
 
 	console.log("Client connected on socket")
@@ -36,3 +48,11 @@ app.listen(config.server.port, () => {
 	const hostUrl = url.format(Object.assign({}, config.server))
 	console.log(`Listening at ${hostUrl}`)
 })
+
+function stringToBinaryArray (string) {
+	return string.split("").map(letter => letter.charCodeAt(0).toString(16) ).join("")
+}
+
+function createBinaryArray (hexdataString) {
+	return new Uint8Array(hexdataString.match(/.{2}/g).map(e => parseInt(e, 16)))
+}
